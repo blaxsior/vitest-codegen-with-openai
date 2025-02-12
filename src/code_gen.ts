@@ -59,7 +59,7 @@ User inputs a function or method def, and you generate corresponding tests.
 Original and test files in the same folder. 
 No implementation, just code, no code block.
 first line is at least import { describe, it, expect, vi, Mock } from 'vitest';
-When mocking, use (item as Mock) from vitest (not vi.Mock)
+When mocking, use type casting (item as Mock) from vitest (not vi.Mock)
 `
                         }
                     ]
@@ -85,24 +85,26 @@ async function getFunctionInfo(filename: string) {
     const buffer = await readFile(filename);
     const data = buffer.toString('utf-8');
 
-    const project = new Project();
-    const sourceFile = project.createSourceFile("noexist.ts", data);
+    // const project = new Project();
+    // const sourceFile = project.createSourceFile("noexist.ts", data);
 
-    // 아이템 정보 추출
-    const items: any[] = sourceFile.getFunctions().map(fn => ({
-        name: fn.getName(),
-        signature: fn.getSignature().getDeclaration().getText(true)
-    }));
+    // // 아이템 정보 추출
+    // const items: any[] = sourceFile.getFunctions().map(fn => ({
+    //     name: fn.getName(),
+    //     signature: fn.getSignature().getDeclaration().getText(true)
+    // }));
 
-    // 클래스 정보 추출
-    const classes = sourceFile.getClasses().map(cls => ({
-        name: cls.getName(),
-        methods: cls.getMethods().map(method => ({
-            name: method.getName(),
-            comment: method.getJsDocs().map(doc => doc.getText()).join("\n"),
-            signature: method.getSignature().getDeclaration().getText(),
-        }))
-    }));
+    // // 클래스 정보 추출
+    // const classes = sourceFile.getClasses().map(cls => ({
+    //     name: cls.getName(),
+    //     methods: cls.getMethods().map(method => ({
+    //         name: method.getName(),
+    //         comment: method.getJsDocs().map(doc => doc.getText()).join("\n"),
+    //         signature: method.getSignature().getDeclaration().getText(),
+    //     }))
+    // }));
 
-    return items.concat(classes);
+    // return items.concat(classes);
+
+    return data;
 }
